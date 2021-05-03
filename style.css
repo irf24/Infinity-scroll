@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@200&display=swap");
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.title {
+  padding: 20px;
+  font-family: Antonio;
+  font-size: 2.5rem;
+  text-align: center;
+  background-color: whitesmoke;
+  letter-spacing: 2px;
+}
+
+.image-container {
+  margin: 10px 300px;
+}
+
+.image-container img {
+  max-width: 100%;
+  margin: 10px 0;
+}
+
+/* media query for smaller devices */
+@media only screen and (max-width: 1000px) {
+  .image-container {
+    margin: 10px 100px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .image-container {
+    margin: 10px 20px;
+  }
+}
