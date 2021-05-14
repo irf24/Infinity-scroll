@@ -17,7 +17,10 @@ body {
   background-color: whitesmoke;
   letter-spacing: 2px;
 }
-
+.loading {
+  max-width: 100%;
+  opacity: 0.5;
+}
 .image-container {
   margin: 10px 300px;
 }
