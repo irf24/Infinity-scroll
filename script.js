@@ -1,9 +1,13 @@
 const count = 5;
-const apiUrl = `https://api.unsplash.com/photos/random?client_id=${config.API_ACCESS_KEY}&count=${count}`;
+let apiUrl = `https://api.unsplash.com/photos/random?client_id=${config.API_ACCESS_KEY}&count=${count}`;
+let apiSearchUrl = "";
 const imageContainer = document.getElementById("image-container");
 const loader = document.getElementById("loader");
+const search = document.getElementById("search");
+const form = document.getElementById("search-form");
 
 let ready = false;
+let random = true;
 let imageCount = 0;
 let photos = [];
 
@@ -38,11 +42,8 @@ function displayPhotos() {
   });
 }
 
-// Get photos from Unspalsh API
-async function getPhotos() {
-  imageCount = 0;
-  ready = false;
-  loader.hidden = false;
+//get random photos
+async function getRandomPhotos() {
   try {
     const response = await fetch(apiUrl);
     photos = await response.json();
@@ -51,6 +52,39 @@ async function getPhotos() {
     // err handling
   }
 }
+
+//get random photos
+async function getSearchResults() {
+  try {
+    const response = await fetch(apiSearchUrl);
+    const data = await response.json();
+    photos = data.results;
+    displayPhotos();
+  } catch (err) {
+    // err handling
+  }
+}
+
+// Get photos from Unspalsh API
+function getPhotos() {
+  imageCount = 0;
+  ready = false;
+  loader.hidden = false;
+  if (random) {
+    getRandomPhotos();
+  } else {
+    getSearchResults();
+  }
+}
+
+//form event listener
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  apiSearchUrl = `https://api.unsplash.com/search/photos?client_id=${config.API_ACCESS_KEY}&query=${e.target.search.value}&count=${count}`;
+  imageContainer.innerHTML = "";
+  random = false;
+  getPhotos();
+});
 
 //infinity scroll functionality
 document.addEventListener("scroll", () => {
