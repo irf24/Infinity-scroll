@@ -1,6 +1,7 @@
-const count = 5;
+const count = 10;
+let page_no = 0;
+let query = "";
 let apiUrl = `https://api.unsplash.com/photos/random?client_id=${config.API_ACCESS_KEY}&count=${count}`;
-let apiSearchUrl = "";
 const imageContainer = document.getElementById("image-container");
 const loader = document.getElementById("loader");
 const search = document.getElementById("search");
@@ -53,10 +54,13 @@ async function getRandomPhotos() {
   }
 }
 
-//get random photos
+//search photos
 async function getSearchResults() {
+  page_no++;
   try {
-    const response = await fetch(apiSearchUrl);
+    const response = await fetch(
+      `https://api.unsplash.com/search/photos?client_id=${config.API_ACCESS_KEY}&query=${query}&page=${page_no}`
+    );
     const data = await response.json();
     photos = data.results;
     displayPhotos();
@@ -73,14 +77,14 @@ function getPhotos() {
   if (random) {
     getRandomPhotos();
   } else {
-    getSearchResults();
+    getSearchResults(query);
   }
 }
 
 //form event listener
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  apiSearchUrl = `https://api.unsplash.com/search/photos?client_id=${config.API_ACCESS_KEY}&query=${e.target.search.value}&count=${count}`;
+  query = e.target.search.value;
   imageContainer.innerHTML = "";
   random = false;
   getPhotos();
