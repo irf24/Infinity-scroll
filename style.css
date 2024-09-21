@@ -36,7 +36,6 @@ body {
 }
 .image-container {
   margin: 10px 300px;
-  columns: 3 auto;
 }
 
 .image-container img {
